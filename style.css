@@ -1,7 +1,7 @@
 .calc-btn {
     background-color: silver;
     color: black;
-    width: 25px;
+    width: 50px;
     height: 45px;
     border: 1px solid grey;
     text-align: center;
@@ -16,19 +16,16 @@
     background-color: red;
 }
 .row {
-    display: table;
-    table-layout: fixed;
-    width: 200px;    
-}
-.column {
-    display: table-cell;
+    display: flex;
+    width: 200px;
 }
 
 #calc-zero {
-    width: 52px; 
+    width: 102px; 
     border-radius: 0 0 0 7px;   
 }
 #calc-display-val {
+    width: 200px;
     height: 80px;
     color: white;
     text-align: right;
