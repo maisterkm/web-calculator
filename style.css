@@ -1,13 +1,16 @@
 .calc-btn {
+    box-sizing: border-box;
     background-color: silver;
     color: black;
-    width: 50px;
-    height: 45px;
+    width: 70px;
+    height: 65px;
     border: 1px solid grey;
     text-align: center;
     cursor: pointer;
-    font-size: 28px;
-    padding-top: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    margin: 5px;
 }
 .btn-base:hover {
     background-color: grey;
@@ -17,15 +20,28 @@
 }
 .row {
     display: flex;
-    width: 200px;
 }
-
+.r {
+    box-sizing: border-box;
+    width: 154px;
+    height: 65px;
+    background-color: silver;
+    color: black;
+    border: 1px solid grey;
+    border-radius: 0 0 0 7px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px 30px;
+    margin: 5px;
+}
 #calc-zero {
-    width: 102px; 
+    width: 182px; 
     border-radius: 0 0 0 7px;   
 }
 #calc-display-val {
-    width: 200px;
+    width: 280px;
     height: 80px;
     color: white;
     text-align: right;
@@ -47,10 +63,13 @@
     border-radius: 0 0 7px 0;
 }
 #calc-parent {
+    width: 280px;
+    border: 3px solid grey;
+    border-radius: 10px 10px 10px 10px;
     margin-left: calc(50% - 100px);
     font-family: "Arial";
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    transform: translateY(-50%);  
 }
