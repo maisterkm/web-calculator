@@ -20,7 +20,7 @@ function assignZero() {
 
 var updateDisplayVal = (clickObj) => {
 	var btnText = clickObj.target.innerText;
-	if(numberOfDigits != 0) {
+	if(numberOfDigits !== 0) {
 		var tmp = evalStringArray.pop();
 		tmp += btnText + '';
 		evalStringArray.push(tmp);
@@ -35,7 +35,7 @@ var updateDisplayVal = (clickObj) => {
     }
     displayVal += btnText;
 	displayValElement.innerText = wholeOperation; 
-}
+};
 
 var performOperation = (clickObj) => {
 	var operator = clickObj.target.innerText;
@@ -89,7 +89,7 @@ var performOperation = (clickObj) => {
 			evalStringArray.push(evaluation);
 			break;
 	}
-}
+};
 
 for(var i = 0; i < calcNumBtns.length; i++) {
 	calcNumBtns[i].addEventListener('click', updateDisplayVal, false);
@@ -106,11 +106,12 @@ cBtn.onclick = () => {
     displayValElement.innerHTML = displayVal;
 	wholeOperation = '';
 	numberOfDigits = 0;
-}
+};
+
 ceBtn.onclick = () => {
     evalStringArray.pop();
 	wholeOperation = evalStringArray.join('');
-	if(wholeOperation == '') {
+	if(wholeOperation === '') {
 		displayVal = 0;
 		numberOfDigits = 0;
 		displayValElement.innerText = displayVal;
@@ -118,7 +119,7 @@ ceBtn.onclick = () => {
 		displayVal = 0;
 		displayValElement.innerText = wholeOperation;
 	}	 
-}
+};
 
 backspaceBtn.onclick = () => {
 	displayVal = displayVal.slice(0, displayVal.length - 1);
@@ -132,7 +133,7 @@ backspaceBtn.onclick = () => {
 		evalStringArray.push(tmp);
 		numberOfDigits--;
 	}
-	if(evalStringArray.length == 1 && (evalStringArray[0] === '' || evalStringArray[0] == 0)) {
+	if(evalStringArray.length === 1 && (evalStringArray[0] === '' || evalStringArray[0] === 0)) {
 		evalStringArray = [];
 		numberOfDigits = 0;
 	}
@@ -142,12 +143,12 @@ backspaceBtn.onclick = () => {
 	if(evalStringArray.length === 0) {
 		wholeOperation = '';
 	}
-}
+};
 
 decimalBtn.onclick = () => {
 	if(!displayVal.includes('.')) {
         displayVal += '.';
-		if(numberOfDigits != 0) {
+		if(numberOfDigits !== 0) {
 			wholeOperation += '.';
 			var tmp = evalStringArray.pop();
 			tmp += '.';
@@ -160,4 +161,4 @@ decimalBtn.onclick = () => {
 		}
     }
 	displayValElement.innerHTML = wholeOperation;
-}
+};
