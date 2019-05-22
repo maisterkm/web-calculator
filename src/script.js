@@ -81,15 +81,55 @@ var performOperation = (clickObj) => {
 			numberOfDigits = 0;
 			break;
 		case'=':
-            var evaluation = eval(evalStringArray.join(' '));
-            displayVal = evaluation + '';
-            wholeOperation = evaluation + '';
+			if (evalStringArray.length >= 3) {
+				var evaluation = calculate();
+				displayVal = evaluation  + '';
+            	wholeOperation = evaluation  + '';
+			}
 			displayValElement.innerText = wholeOperation;
-			evalStringArray = [];
-			evalStringArray.push(evaluation);
 			break;
 	}
 };
+
+function calculate() {
+	if (evalStringArray.length === 1) {
+		return;
+	}
+	switch(evalStringArray[1]) {
+		case'+':
+			var evaluation = Number(evalStringArray[0]) + Number(evalStringArray[2]);
+			actionWithEvalStringArray(evaluation);
+			return evalStringArray[0];
+			break;
+		case'-':
+			var evaluation = Number(evalStringArray[0]) - Number(evalStringArray[2]);
+			for(var i = 0; i < 3; i++) { evalStringArray.shift(); }
+			evalStringArray.unshift(evaluation);
+			calculate();
+			return evalStringArray[0];
+			break;
+		case'*':
+			var evaluation = Number(evalStringArray[0]) * Number(evalStringArray[2]);
+			for(var i = 0; i < 3; i++) { evalStringArray.shift(); }
+			evalStringArray.unshift(evaluation);
+			calculate();
+			return evalStringArray[0];
+			break;
+		case'/':
+			var evaluation = Number(evalStringArray[0]) / Number(evalStringArray[2]);
+			for(var i = 0; i < 3; i++) { evalStringArray.shift(); }
+			evalStringArray.unshift(evaluation);
+			calculate();
+			return evalStringArray[0];
+			break;
+	}
+}
+
+function actionWithEvalStringArray(value) {
+	for(var i = 0; i < 3; i++) { evalStringArray.shift(); }
+	evalStringArray.unshift(value);
+	calculate();	
+}
 
 for(var i = 0; i < calcNumBtns.length; i++) {
 	calcNumBtns[i].addEventListener('click', updateDisplayVal, false);
