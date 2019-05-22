@@ -49,4 +49,8 @@
 #calc-parent {
     margin-left: calc(50% - 100px);
     font-family: "Arial";
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
