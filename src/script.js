@@ -1,204 +1,185 @@
-var decimalBtn = document.getElementById('calc-decimal');
-var ceBtn = document.getElementById('calc-ce');
-var cBtn = document.getElementById('calc-c');
-var backspaceBtn = document.getElementById('calc-backspace');
-var displayValElement = document.getElementById('calc-display-val');
-
-var displayVal = '0';
-var evalStringArray = [];
-var wholeOperation ='';
-var numberOfDigits = 0;
-
-var calcNumBtns = document.getElementsByClassName('calc-btn-num');
-var calcOperatorBtns = document.getElementsByClassName('calc-btn-operator');
-
-function assignZero() {
-	evalStringArray.push('0');
-	wholeOperation = '0';
-	displayVal = '0';
-}
+import { calc } from './calc.js';
 
 var updateDisplayVal = (clickObj) => {
 	var btnText = clickObj.target.innerText;
-	if(numberOfDigits !== 0) {
-		var tmp = evalStringArray.pop();
+	if(calc.numberOfDigits !== 0) {
+		var tmp = calc.evalStringArray.pop();
 		tmp += btnText + '';
-		evalStringArray.push(tmp);
-		numberOfDigits++;
+		calc.evalStringArray.push(tmp);
+		calc.numberOfDigits++;
 	} else {
-		evalStringArray.push(btnText);
-		numberOfDigits++;
+		calc.evalStringArray.push(btnText);
+		calc.numberOfDigits++;
 	}
-    wholeOperation += btnText;
-	if(displayVal === '0') {
-		displayVal = '';
+    calc.wholeOperation += btnText;
+	if(calc.displayVal === '0') {
+		calc.displayVal = '0';
     }
-    displayVal += btnText;
-	displayValElement.innerText = wholeOperation; 
+    calc.displayVal += btnText;
+	calc.displayValElement.innerText = calc.wholeOperation; 
 };
 
 var performOperation = (clickObj) => {
 	var operator = clickObj.target.innerText;
 	switch(operator){
 		case '+':
-			if(evalStringArray.length === 0) {
-				assignZero();	
+			if(calc.evalStringArray.length === 0) {
+				calc.assignZero();	
 			}
-			displayVal = '0';
-            wholeOperation += '+';
-            displayValElement.innerText = wholeOperation;
-			evalStringArray.push('+');
-			numberOfDigits = 0;
+			calc.displayVal = '0';
+            calc.wholeOperation += '+';
+            calc.displayValElement.innerText = calc.wholeOperation;
+			calc.evalStringArray.push('+');
+			calc.numberOfDigits = 0;
 			break;
 		case'-':
-			if(evalStringArray.length === 0) {
-				assignZero();	
+			if(calc.evalStringArray.length === 0) {
+				calc.assignZero();	
 			}
-			displayVal = '0';
-			wholeOperation += '-';
-			displayValElement.innerText = wholeOperation;
-			evalStringArray.push('-');
-			numberOfDigits = 0;
+			calc.displayVal = '0';
+			calc.wholeOperation += '-';
+			calc.displayValElement.innerText = calc.wholeOperation;
+			calc.evalStringArray.push('-');
+			calc.numberOfDigits = 0;
 			break;
 		case'x':
-			if(evalStringArray.length === 0) {
-				assignZero();	
+			if(calc.evalStringArray.length === 0) {
+				calc.assignZero();	
 			}
-			displayVal = '0';
-			wholeOperation += '*';
-			displayValElement.innerText = wholeOperation;
-			evalStringArray.push('*');
-			numberOfDigits = 0;
+			calc.displayVal = '0';
+			calc.wholeOperation += '*';
+			calc.displayValElement.innerText = calc.wholeOperation;
+			calc.evalStringArray.push('*');
+			calc.numberOfDigits = 0;
 			break;
 		case'/':
-			if(evalStringArray.length === 0) {
-				assignZero();	
+			if(calc.evalStringArray.length === 0) {
+				calc.assignZero();	
 			}
-			displayVal = '0';
-			wholeOperation += '/';
-			displayValElement.innerText = wholeOperation;
-			evalStringArray.push('/');
-			numberOfDigits = 0;
+			calc.displayVal = '0';
+			calc.wholeOperation += '/';
+			calc.displayValElement.innerText = calc.wholeOperation;
+			calc.evalStringArray.push('/');
+			calc.numberOfDigits = 0;
 			break;
 		case'=':
-			if (evalStringArray.length >= 3) {
+			if (calc.evalStringArray.length >= 3) {
 				var evaluation = calculate();
-				displayVal = evaluation  + '';
-            	wholeOperation = evaluation  + '';
+				calc.displayVal = evaluation  + '';
+            	calc.wholeOperation = evaluation  + '';
 			}
-			displayValElement.innerText = wholeOperation;
+			calc.displayValElement.innerText = calc.wholeOperation;
 			break;
 	}
-};
+}; 
 
 function calculate() {
-	if (evalStringArray.length === 1) {
+	if (calc.evalStringArray.length === 1) {
 		return;
 	}
-	switch(evalStringArray[1]) {
+	switch(calc.evalStringArray[1]) {
 		case'+':
-			var evaluation = Number(evalStringArray[0]) + Number(evalStringArray[2]);
+			var evaluation = Number(calc.evalStringArray[0]) + Number(calc.evalStringArray[2]);
 			actionWithEvalStringArray(evaluation);
-			return evalStringArray[0];
+			return calc.evalStringArray[0];
 			break;
 		case'-':
-			var evaluation = Number(evalStringArray[0]) - Number(evalStringArray[2]);
-			for(var i = 0; i < 3; i++) { evalStringArray.shift(); }
-			evalStringArray.unshift(evaluation);
+			var evaluation = Number(calc.evalStringArray[0]) - Number(calc.evalStringArray[2]);
+			for(var i = 0; i < 3; i++) { calc.evalStringArray.shift(); }
+			calc.evalStringArray.unshift(evaluation);
 			calculate();
-			return evalStringArray[0];
+			return calc.evalStringArray[0];
 			break;
 		case'*':
-			var evaluation = Number(evalStringArray[0]) * Number(evalStringArray[2]);
-			for(var i = 0; i < 3; i++) { evalStringArray.shift(); }
-			evalStringArray.unshift(evaluation);
+			var evaluation = Number(calc.evalStringArray[0]) * Number(calc.evalStringArray[2]);
+			for(var i = 0; i < 3; i++) { calc.evalStringArray.shift(); }
+			calc.evalStringArray.unshift(evaluation);
 			calculate();
-			return evalStringArray[0];
+			return calc.evalStringArray[0];
 			break;
 		case'/':
-			var evaluation = Number(evalStringArray[0]) / Number(evalStringArray[2]);
-			for(var i = 0; i < 3; i++) { evalStringArray.shift(); }
-			evalStringArray.unshift(evaluation);
+			var evaluation = Number(calc.evalStringArray[0]) / Number(calc.evalStringArray[2]);
+			for(var i = 0; i < 3; i++) { calc.evalStringArray.shift(); }
+			calc.evalStringArray.unshift(evaluation);
 			calculate();
-			return evalStringArray[0];
+			return calc.evalStringArray[0];
 			break;
 	}
-}
+} 
 
 function actionWithEvalStringArray(value) {
-	for(var i = 0; i < 3; i++) { evalStringArray.shift(); }
-	evalStringArray.unshift(value);
+	for(var i = 0; i < 3; i++) { calc.evalStringArray.shift(); }
+	calc.evalStringArray.unshift(value);
 	calculate();	
 }
 
-for(var i = 0; i < calcNumBtns.length; i++) {
-	calcNumBtns[i].addEventListener('click', updateDisplayVal, false);
+for(var i = 0; i < calc.calcNumBtns.length; i++) {
+	calc.calcNumBtns[i].addEventListener('click', updateDisplayVal, false);
 }
 
-for(var i = 0; i < calcOperatorBtns.length; i++) {
-	calcOperatorBtns[i].addEventListener('click', performOperation, false);
+for(var i = 0; i < calc.calcOperatorBtns.length; i++) {
+	calc.calcOperatorBtns[i].addEventListener('click', performOperation, false);
 }
 
-cBtn.onclick = () => {
-    displayVal = '0';
-	pendingVal = undefined;
-	evalStringArray = [];
-    displayValElement.innerHTML = displayVal;
-	wholeOperation = '';
-	numberOfDigits = 0;
+calc.cBtn.onclick = () => {
+    calc.displayVal = '0';
+	calc.evalStringArray = [];
+    calc.displayValElement.innerHTML = calc.displayVal;
+	calc.wholeOperation = '';
+	calc.numberOfDigits = 0;
 };
 
-ceBtn.onclick = () => {
-    evalStringArray.pop();
-	wholeOperation = evalStringArray.join('');
-	if(wholeOperation === '') {
-		displayVal = 0;
-		numberOfDigits = 0;
-		displayValElement.innerText = displayVal;
+calc.ceBtn.onclick = () => {
+    calc.evalStringArray.pop();
+	calc.wholeOperation = calc.evalStringArray.join('');
+	if(calc.wholeOperation === '') {
+		calc.displayVal = 0;
+		calc.numberOfDigits = 0;
+		calc.displayValElement.innerText = calc.displayVal;
 	} else {
-		displayVal = 0;
-		displayValElement.innerText = wholeOperation;
+		calc.displayVal = 0;
+		calc.displayValElement.innerText = calc.wholeOperation;
 	}	 
 };
 
-backspaceBtn.onclick = () => {
-	displayVal = displayVal.slice(0, displayVal.length - 1);
-	wholeOperation = wholeOperation.slice(0, wholeOperation.length - 1);
-	var tmp = evalStringArray.pop();
+calc.backspaceBtn.onclick = () => {
+	calc.displayVal = calc.displayVal.slice(0, calc.displayVal.length - 1);
+	calc.wholeOperation = calc.wholeOperation.slice(0, calc.wholeOperation.length - 1);
+	var tmp = calc.evalStringArray.pop();
 	if(tmp.length === 1) {
-		evalStringArray.push(0);
-		numberOfDigits--;
+		calc.evalStringArray.push(0);
+		calc.numberOfDigits--;
 	} else {
 		tmp = tmp.slice(0, tmp.length - 1);
-		evalStringArray.push(tmp);
-		numberOfDigits--;
+		calc.evalStringArray.push(tmp);
+		calc.numberOfDigits--;
 	}
-	if(evalStringArray.length === 1 && (evalStringArray[0] === '' || evalStringArray[0] === 0)) {
-		evalStringArray = [];
-		numberOfDigits = 0;
+	if(calc.evalStringArray.length === 1 && (calc.evalStringArray[0] === '' || calc.evalStringArray[0] === 0)) {
+		calc.evalStringArray = [];
+		calc.numberOfDigits = 0;
 	}
-	if(wholeOperation === '') { wholeOperation = '0'; }
-	if(displayVal === '') { displayVal = '0'; }
-	displayValElement.innerText = wholeOperation;
-	if(evalStringArray.length === 0) {
-		wholeOperation = '';
+	if(calc.wholeOperation === '') { calc.wholeOperation = '0'; }
+	if(calc.displayVal === '') { calc.displayVal = '0'; }
+	calc.displayValElement.innerText = calc.wholeOperation;
+	if(calc.evalStringArray.length === 0) {
+		calc.wholeOperation = '';
 	}
 };
 
-decimalBtn.onclick = () => {
-	if(!displayVal.includes('.')) {
-        displayVal += '.';
-		if(numberOfDigits !== 0) {
-			wholeOperation += '.';
-			var tmp = evalStringArray.pop();
+calc.decimalBtn.onclick = () => {
+	if(!calc.displayVal.includes('.')) {
+        calc.displayVal += '.';
+		if(calc.numberOfDigits !== 0) {
+			calc.wholeOperation += '.';
+			var tmp = calc.evalStringArray.pop();
 			tmp += '.';
-			evalStringArray.push(tmp);
-			numberOfDigits++;
+			calc.evalStringArray.push(tmp);
+			calc.numberOfDigits++;
 		} else {
-			wholeOperation += '0.';
-			evalStringArray.push(displayVal);
-			numberOfDigits++;
+			calc.wholeOperation += '0.';
+			calc.evalStringArray.push(calc.displayVal);
+			calc.numberOfDigits++;
 		}
     }
-	displayValElement.innerHTML = wholeOperation;
-};
+	calc.displayValElement.innerHTML = calc.wholeOperation;
+}; 
