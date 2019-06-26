@@ -1,0 +1,18 @@
+{
+  "name": "eslinttest",
+  "version": "1.0.0",
+  "description": "testing_eslint",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.foxminded.com.ua/maister/web-calculator.git"
+  },
+  "author": "alxander",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.0.1"
+  }
+}
